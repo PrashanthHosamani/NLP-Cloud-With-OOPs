@@ -71,7 +71,7 @@ class NLPApp:
 
 
   def __NER(self):
-    para = input("enter the paragraph: ")
+    para = input("Enter the paragraph: ")
     search_term = input("what would you lilke to search")
 
     client = nlpcloud.Client("finetuned-gpt-neox-20b", "523ad8e8b84573d26d033e11620af7012add3b9c", gpu=True, lang="en")
@@ -83,7 +83,18 @@ class NLPApp:
     pass
   
   def __sentiment_analysis(self):
-    pass
+    para = input("Enter the paragraph")
+
+    client = nlpcloud.Client("distilbert-base-uncased-emotion", "523ad8e8b84573d26d033e11620af7012add3b9c", gpu=False, lang="en")
+    response = client.sentiment(para)
+
+    L = []
+    for i in response['scored_labels']:
+        L.append(i['score'])
+    index = sorted(list(enumerate(L)),key = lambda x:x[1],reverse = True)[0][0]
+
+    print(response['scored_labels'][index]['label'])
+    self.__second_menu()
 
   def __Logout(self):
     pass
@@ -94,4 +105,3 @@ class NLPApp:
 obj = NLPApp()
 
     
-
